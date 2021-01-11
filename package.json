@@ -1,0 +1,24 @@
+{
+  "name": "momojito_Server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Young-mason/momojito_Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Young-mason/momojito_Server/issues"
+  },
+  "homepage": "https://github.com/Young-mason/momojito_Server#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
