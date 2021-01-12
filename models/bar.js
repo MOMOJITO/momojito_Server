@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Bar.init({
+    name : {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     photoURL: {
       type: DataTypes.STRING(100),
       allowNull: true,
