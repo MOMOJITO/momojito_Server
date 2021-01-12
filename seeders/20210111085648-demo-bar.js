@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('Bars', [{
       photoURL: "barImage.png",
       location: "suwon",
-      cocktailId: "1",
+      cocktailId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);
