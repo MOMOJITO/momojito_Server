@@ -24,8 +24,7 @@ module.exports = async (req, res) => {
                 res.status(200).json({message : 'complete sign up'});
             })
         });
-        
       } else {
-        res.status(400).json({message : 'Fail to Sign up'});
+        res.status(400).json({message : 'Fail to Sign up(ID overlap)'});
       }
 };
