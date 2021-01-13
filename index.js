@@ -5,13 +5,20 @@ const config = require('./config/index');
 const morgan = require('morgan');
 const cors = require('cors');
 const { SERVER_PORT } = config;
+const Routes = require('./routes/routes');
 
-
-app.use(cors());
+//middleware
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended : true}))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended : false }));
+app.use(cookieParser());
+
+//route
+app.use('/', Routes);
 
 //test용
 app.get('/', (req, res) => {
@@ -19,5 +26,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(SERVER_PORT, () => {
-  console.log(`Example app listening at http://localhost:${SERVER_PORT}`)
+  console.log(`Server listening at http://localhost:${SERVER_PORT}`)
 })

@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING(100),
       allowNull: false
     },
+    koName: {
+      type : DataTypes.STRING,
+      allowNull: false
+    },
     avrRate: DataTypes.INTEGER(20),
     allowNull: false,
     defaultValue: 0
