@@ -8,10 +8,13 @@ const { SERVER_PORT } = config;
 const Routes = require('./routes/routes');
 
 //middleware
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended : true}));
+app.use(express.urlencoded({ extended : false }));
 app.use(cookieParser());
 
 //route

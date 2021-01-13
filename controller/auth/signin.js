@@ -21,11 +21,10 @@ module.exports = async (req, res) => {
 
             if(passwordCheck) {
               let token = jwt.sign({ email : email }, TOKEN_SECRET);
-              res.status(200).cookie('token', token, {httpOnly:true}).json({message : 'Sign In completed'});
+              res.status(200).cookie('token', token).json({message : 'Sign In completed', data : token});
             } else {
               res.status(400).json({message : 'Fail to Sign In'});
             }
         }
     }
-
 };

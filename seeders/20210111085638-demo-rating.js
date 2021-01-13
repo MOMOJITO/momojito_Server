@@ -8,7 +8,15 @@ module.exports = {
       rate: 3,
       createdAt: new Date(),
       updatedAt: new Date()
-    }]);
+    },
+   {
+     userId: 1,
+     cocktailId: 2,
+     rate: 4,
+     createdAt: new Date(),
+     updatedAt: new Date()
+   }
+  ]);
   },
 
   down: async (queryInterface, Sequelize) => {

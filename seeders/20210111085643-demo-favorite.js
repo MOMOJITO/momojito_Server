@@ -7,7 +7,14 @@ module.exports = {
       cocktailId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
-    }]);
+    },
+    {
+      userId: 1,
+      cocktailId: 3,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ]);
   },
 
   down: async (queryInterface, Sequelize) => {
