@@ -16,11 +16,28 @@ module.exports = async (req, res) => {
         where: { email: tokenData.email },
       });
 
-      await Favorite.create({
-        userId: userInfo.dataValues.id,
-        cocktailId,
-      });
-      res.status(200).json({ message: 'complete add your cocktail' });
+      let overlapCheck = await Favorite.findOne({
+        where : { 
+          userId : userInfo.dataValues.id,
+          cocktailId
+        }
+      })
+
+      if(!overlapCheck) {
+        await Favorite.create({
+          userId: userInfo.dataValues.id,
+          cocktailId,
+        });
+        res.status(200).json({ message: 'complete add your cocktail' });
+      } else {
+        await Favorite.destroy({
+          where : {
+            userId : userInfo.dataValues.id,
+            cocktailId
+          }
+        })
+        res.status(200).json({ message : 'complete remove your cocktail' });
+      }
     } catch (err) {
       res.status(500).json({ message: 'Fail to add your cocktail' });
     }
