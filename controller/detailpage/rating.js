@@ -31,36 +31,57 @@ module.exports = async (req, res) => {
           rate: rating,
         });
 
-        // 해당 칵테일 평점준 기록 다 불러오기(무조건 countCocktail.length>=1)
-        let countCocktail = await Rating.findAll({
-          attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
-          where: { cocktailId },
-        }).then((el) => el.map((el2) => el2.dataValues.rate));
+        // 해당 칵테일 평점 준 기록 다 불러오기(무조건 countCocktail.length>=1)
+        let newRate = calculateRate(cocktailId);
 
-        let calculateRate = countCocktail.reduce((el1, el2) => {
-          return el1 + el2;
-        });
-
-        calculateRate = Math.floor(calculateRate / countCocktail.length);
-
-        await Cocktail.update(
-          {
-            avrRate: calculateRate,
-          },
-          {
-            where: { id: cocktailId },
-          },
-        );
         res
           .status(200)
-          .json({ rate: calculateRate, message: 'complete update rating' });
+          .json({ rate: newRate, message: 'complete update rating(new create)' });
       } else {
+
+        await Rating.update(
+          {
+            rate : rating
+          },
+          {
+            where : {
+              userId : userInfo.dataValues.id,
+              cocktailId
+            }
+          }
+        );
+        let newRate = calculateRate(cocktailId);
+
         res
-          .status(400)
-          .json({ message: 'You already finished rating at this cocktail' });
+          .status(200)
+          .json({ rate : newRate, message: 'complete update rating' });
       }
     } catch (err) {
       res.status(500).json({ message: 'Fail to update rating' });
     }
   }
 };
+
+async function calculateRate(cocktailId) {
+  let countCocktail = await Rating.findAll({
+    attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
+    where: { cocktailId },
+  }).then((el) => el.map((el2) => el2.dataValues.rate));
+
+  let calculateRate = countCocktail.reduce((el1, el2) => {
+    return el1 + el2;
+  });
+
+  calculateRate = Math.floor(calculateRate / countCocktail.length);
+
+  await Cocktail.update(
+    {
+      avrRate: calculateRate,
+    },
+    {
+      where: { id: cocktailId },
+    },
+  );
+
+  return calculateRate;
+}
