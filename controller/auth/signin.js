@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         res
           .status(200)
           .cookie('token', token)
-          .json({ message: 'Sign In completed', token : token });
+          .json({ message: 'Sign In completed', accessToken : token });
       } else {
         res.status(402).json({ message: 'wrong password' });
       }
