@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, nickname } = req.body;
 
   let userInfo = await User.findOne({
     where: { email: email },
@@ -18,10 +18,10 @@ module.exports = async (req, res) => {
         await User.create({
           email: email,
           password: hash,
-          nickname: email,
+          nickname: nickname,
           profile: 'https://avatars1.githubusercontent.com/u/47313528?s=88&v=4',
         });
-        res.status(200).json({ message: 'complete sign up' });
+        res.status(200).json({ message: 'complete sign up', nickname : nickname });
       });
     });
   } else {
