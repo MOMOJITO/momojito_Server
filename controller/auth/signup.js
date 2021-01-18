@@ -12,10 +12,14 @@ module.exports = async (req, res) => {
   let getAllNickname = await User.findAll().then((data) =>
         data.map((el) => el.dataValues.nickname),
       );
-      
+
   let nicknameCheck = getAllNickname.includes(nickname);
 
-  if (!userInfo && !nicknameCheck) {
+  if(nicknameCheck) {
+    res.status(401).json({ message : 'overlap nickname'});
+  }
+
+  if (!userInfo) {
     bcrypt.genSalt(saltRounds, (err, salt) => {
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
@@ -32,6 +36,6 @@ module.exports = async (req, res) => {
       });
     });
   } else {
-    res.status(400).json({ message: 'Fail to Sign up(ID or nickname overlap)' });
+    res.status(402).json({ message: 'overlap Id' });
   }
 };
