@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     });
 
     if (!userInfo) {
-      res.status(400).json({ message: 'Fail to Sign In' });
+      res.status(401).json({ message: 'no exist Id' });
     } else {
       let passwordCheck = await bcrypt.compare(
         password,
@@ -27,9 +27,9 @@ module.exports = async (req, res) => {
         res
           .status(200)
           .cookie('token', token)
-          .json({ message: 'Sign In completed' });
+          .json({ message: 'Sign In completed', accessToken : token });
       } else {
-        res.status(400).json({ message: 'Fail to Sign In' });
+        res.status(402).json({ message: 'wrong password' });
       }
     }
   }

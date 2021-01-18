@@ -72,7 +72,7 @@ async function calculateRate(cocktailId) {
     return el1 + el2;
   });
 
-  calculateRate = Math.floor(calculateRate / countCocktail.length);
+  calculateRate = (calculateRate / countCocktail.length).toFixed(1);
 
   await Cocktail.update(
     {

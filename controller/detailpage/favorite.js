@@ -4,7 +4,7 @@ const config = require('../../config/index');
 const { TOKEN_SECRET } = config;
 
 module.exports = async (req, res) => {
-  let { cocktailId } = req.body;
+  let { cocktailId, isAdd } = req.body;
   const token = req.cookies.token;
 
   if (!token) {
@@ -23,12 +23,16 @@ module.exports = async (req, res) => {
         }
       })
 
-      if(!overlapCheck) {
-        await Favorite.create({
-          userId: userInfo.dataValues.id,
-          cocktailId,
-        });
-        res.status(200).json({ message: 'complete add your cocktail' });
+      if(isAdd) {
+        if(!overlapCheck) {
+          await Favorite.create({
+            userId: userInfo.dataValues.id,
+            cocktailId,
+          });
+          res.status(200).json({ message: 'complete add your cocktail' });
+        } else {
+          res.status(400).json({ message : 'Error(you already added this cocktail)' });
+        }
       } else {
         await Favorite.destroy({
           where : {
@@ -36,7 +40,7 @@ module.exports = async (req, res) => {
             cocktailId
           }
         })
-        res.status(200).json({ message : 'complete remove your cocktail' });
+        res.status(201).json({ message : 'complete remove your cocktail' });
       }
     } catch (err) {
       res.status(500).json({ message: 'Fail to add your cocktail' });

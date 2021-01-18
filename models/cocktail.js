@@ -25,9 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING,
       allowNull: false
     },
-    avrRate: DataTypes.INTEGER(20),
-    allowNull: false,
-    defaultValue: 0
+    avrRate: {
+      type : DataTypes.DECIMAL(10,1),
+      allowNull: false,
+      defaultValue: 0
+    },
   }, {
     sequelize,
     modelName: 'Cocktail',
