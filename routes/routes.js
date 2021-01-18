@@ -13,6 +13,6 @@ app.use('/detail', detailpage);
 app.use('/mypage/profileChage', profileChange);
 app.use('/mypage/profileDelete', profileDelete);
 app.use('/mypage', mypage);
-app.use('/mainpage', mainpage );
+app.use('/mainpage/getTopTen', mainpage );
 
 module.exports = app;
