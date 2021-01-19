@@ -1,10 +1,11 @@
-const { User } = require('../../models');
+const { User, Favorite } = require('../../models');
 const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/index');
 const { TOKEN_SECRET } = config;
 
 module.exports = async (req, res) => {
+  const token = req.cookies.token;
   const { authorizationCode } = req.body;
   console.log(authorizationCode);
 
@@ -47,10 +48,24 @@ module.exports = async (req, res) => {
             .json({ message: 'Sign In completed', accessToken : token });
           } else {
             let token = jwt.sign({ email : json.response.email }, TOKEN_SECRET);
+
+            let userInfo = await User.findOne({
+              attributes: {
+                exclude: ['createdAt', 'updatedAt', 'password'],
+              },
+              where: { email: json.response.email },
+            });
+
+            let cocktailList = await Favorite.findAll({
+              where: { userId: userInfo.dataValues.id },
+            }); 
+
+            cocktailList = cocktailList.map((el) => el.dataValues.cocktailId);
+
             res
             .status(200)
             .cookie('token', token)
-            .json({ message: 'Sign In completed', accessToken : token });
+            .json({ data: {accessToken : token, userInfo : userInfo.dataValues, cocktailList}, message: 'Sign In completed'});
           }
         });
     });
