@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
           cocktailId,
         },
       });
-
+      
       //중복체크
       if (!doubleCheck) {
         await Rating.create({
@@ -31,12 +31,12 @@ module.exports = async (req, res) => {
           rate: rating,
         });
 
-        // 해당 칵테일 평점 준 기록 다 불러오기(무조건 countCocktail.length>=1)
-        let newRate = calculateRate(cocktailId);
-
-        res
+        calculateRate(cocktailId).then((newRate) => {
+          res
           .status(200)
-          .json({ rate: newRate, message: 'complete update rating(new create)' });
+          .json({ rate : Number(newRate), message: 'complete update rating' });
+        });
+
       } else {
 
         await Rating.update(
@@ -50,11 +50,12 @@ module.exports = async (req, res) => {
             }
           }
         );
-        let newRate = calculateRate(cocktailId);
-
-        res
+        calculateRate(cocktailId).then((newRate) => {
+          res
           .status(200)
-          .json({ rate : newRate, message: 'complete update rating' });
+          .json({ rate : Number(newRate), message: 'complete update rating' });
+        });
+
       }
     } catch (err) {
       res.status(500).json({ message: 'Fail to update rating' });
@@ -82,6 +83,5 @@ async function calculateRate(cocktailId) {
       where: { id: cocktailId },
     },
   );
-
   return calculateRate;
 }
