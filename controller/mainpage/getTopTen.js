@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'name']
         },
-        limit : 10
     })
     cocktailData = cocktailData.map((el) => el.dataValues);
 

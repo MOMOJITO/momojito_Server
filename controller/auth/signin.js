@@ -26,7 +26,11 @@ module.exports = async (req, res) => {
         let token = jwt.sign({ email: email }, TOKEN_SECRET);
         res
           .status(200)
-          .cookie('token', token)
+          .cookie('token', token, {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'None',
+          })
           .json({ message: 'Sign In completed', accessToken : token });
       } else {
         res.status(402).json({ message: 'wrong password' });

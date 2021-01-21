@@ -14,4 +14,7 @@ module.exports = {
   KAKAO_API_KEY: process.env.KAKAO_API_KEY,
   NAVER_API_KEY: process.env.NAVER_API_KEY,
   NAVER_SECRET: process.env.NAVER_SECRET,
+  NAVER_REDIRECT_URI: process.env.NAVER_REDIRECT_URI,
+  KAKAO_REDIRECT_URI: process.env.KAKAO_REDIRECT_URI,
+  SERVICE_URI: process.env.SERVICE_URI,
 };
