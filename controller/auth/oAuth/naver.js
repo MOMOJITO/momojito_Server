@@ -7,7 +7,7 @@ const { TOKEN_SECRET } = config;
 module.exports = async (req, res) => {
   const { authorizationCode } = req.body;
 
-  let url = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${config.NAVER_API_KEY}&client_secret=${config.NAVER_SECRET}&redirect_uri=http://localhost:5000/auth/navercallback&code=${authorizationCode}&state=rara`;
+  let url = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${config.NAVER_API_KEY}&client_secret=${config.NAVER_SECRET}&redirect_uri=${config.NAVER_REDIRECT_URI}&code=${authorizationCode}&state=rara`;
 
   fetch(url, {
     method: 'GET',

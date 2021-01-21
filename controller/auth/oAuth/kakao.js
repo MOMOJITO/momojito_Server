@@ -8,7 +8,7 @@ module.exports = (req, res) => {
   const { authorizationCode } = req.body;
   console.log(authorizationCode);
 
-  let url = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${config.KAKAO_API_KEY}&redirect_uri=http://localhost:5000/auth/kakaocallback&code=${authorizationCode}`;
+  let url = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${config.KAKAO_API_KEY}&redirect_uri=${config.KAKAO_REDIRECT_URI}&code=${authorizationCode}`;
 
   fetch(url, {
     method: 'POST',
@@ -60,7 +60,7 @@ module.exports = (req, res) => {
                 data: {
                   accessToken: token,
                   userInfo: userInfo.dataValues,
-                  cocktailList,
+                  cocktailList: [],
                 },
                 message: 'Sign In completed',
               });
