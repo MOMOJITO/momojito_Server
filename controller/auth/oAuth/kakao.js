@@ -55,7 +55,11 @@ module.exports = (req, res) => {
 
             res
               .status(200)
-              .cookie('token', token)
+              .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'None',
+              })
               .json({
                 data: {
                   accessToken: token,
@@ -85,7 +89,11 @@ module.exports = (req, res) => {
 
             res
               .status(200)
-              .cookie('token', token)
+              .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'None',
+              })
               .json({
                 data: {
                   accessToken: token,

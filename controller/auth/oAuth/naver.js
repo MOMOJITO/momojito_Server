@@ -6,6 +6,7 @@ const { TOKEN_SECRET } = config;
 
 module.exports = async (req, res) => {
   const { authorizationCode } = req.body;
+  console.log(authorizationCode);
 
   let url = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${config.NAVER_API_KEY}&client_secret=${config.NAVER_SECRET}&redirect_uri=${config.NAVER_REDIRECT_URI}&code=${authorizationCode}&state=rara`;
 
@@ -50,7 +51,11 @@ module.exports = async (req, res) => {
 
             res
               .status(200)
-              .cookie('token', token)
+              .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'None',
+              })
               .json({
                 data: {
                   accessToken: token,
@@ -77,7 +82,11 @@ module.exports = async (req, res) => {
 
             res
               .status(200)
-              .cookie('token', token)
+              .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'None',
+              })
               .json({
                 data: {
                   accessToken: token,
