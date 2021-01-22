@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
         calculateRate(cocktailId).then((newRate) => {
           res
           .status(200)
-          .json({ rate : newRate, message: 'complete update rating' });
+          .json({ rate : newRate[0], numbers : newRate[1],  message: 'complete update rating' });
         });
 
       } else {
@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
         calculateRate(cocktailId).then((newRate) => {
           res
           .status(200)
-          .json({ rate : newRate, message: 'complete update rating' });
+          .json({ rate : newRate[0], numbers : newRate[1], message: 'complete update rating' });
         });
 
       }
@@ -83,5 +83,12 @@ async function calculateRate(cocktailId) {
       where: { id: cocktailId },
     },
   );
-  return calculateRate;
+
+  let userCount = await Rating.findAll({
+    where : {cocktailId}
+  })
+
+  userCount = userCount.length;
+
+  return [calculateRate, userCount];
 }
