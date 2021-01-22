@@ -3,7 +3,6 @@ const { Cocktail } = require('../../models');
 module.exports = async (req, res) => {
     //실제 로직
     let cocktailData = await Cocktail.findAll({
-        order: [['avrRate', 'DESC']],
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'name']
         },
