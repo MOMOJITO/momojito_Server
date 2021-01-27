@@ -31,6 +31,22 @@ module.exports = async (req, res) => {
         profile: userInfo.dataValues.profile,
         date
       });
+
+      let CommentId = await Comment.findAll({
+        limit: 1,
+        order: [['createdAt', 'DESC']]
+      })
+      CommentId = CommentId.map(el => el.dataValues)
+
+      let obj = {
+        id : CommentId[0].id,
+        nickname : userInfo.dataValues.nickname,
+        profile : userInfo.dataValues.profile,
+        date,
+        text
+      }
+
+      res.json({ message : 'complete load data', data : [obj]})
     } catch (err) {
       res.status(500).json({ message: 'Fail to create comment' });
     }
