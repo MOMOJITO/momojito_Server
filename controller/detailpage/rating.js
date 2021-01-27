@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
         calculateRate(cocktailId).then((newRate) => {
           res
           .status(200)
-          .json({ rate : newRate[0], numbers : newRate[1], message: 'complete update rating' });
+          .json({ rate : newRate[0], number : newRate[1], message: 'complete update rating' });
         });
 
       }
