@@ -8,7 +8,7 @@ module.exports = {
     "database": DATABASE_NAME,
     "host": DATABASE_HOST,
     "dialect": "mysql",
-    "port" : DATABASE_PORT
+    "port" : DATABASE_PORT,
   },
   "test": {
     "username": "root",

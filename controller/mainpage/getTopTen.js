@@ -1,4 +1,4 @@
-const { Cocktail } = require('../../models');
+const { Cocktail, Rating } = require('../../models');
 
 module.exports = async (req, res) => {
     //실제 로직
@@ -9,16 +9,12 @@ module.exports = async (req, res) => {
     })
     cocktailData = cocktailData.map((el) => el.dataValues);
 
+    for(let i=0; i<cocktailData.length; i++) {
+        let countNumber = await Rating.findAll({
+            where : {cocktailId : cocktailData[i].id}
+        })
+        cocktailData[i].number = String(countNumber.length);
+    }
+
     res.status(200).json({ data : cocktailData, message : 'complete load top10 data' });
-
-    //테스트용
-    // let obj = {};
-    // for(let i=1; i<17; i++) {
-    // let randomNum = Math.floor(Math.random()*6);
-    //     obj[i] = randomNum;
-    // }
-
-    // res.status(200).json({ data : obj, message : 'complete load top10 data'});
-
-
 };
