@@ -27,7 +27,6 @@ module.exports = async (req, res) => {
       })
         .then((res) => res.json())
         .then(async (json) => {
-          console.log(json);
 
           let checkEmail = await User.findOne({
             where: { email: json.response.email },

@@ -5,6 +5,7 @@ const config = require('../../../config/index');
 const { TOKEN_SECRET } = config;
 
 module.exports = (req, res) => {
+  // const { authorizationCode } = req.body;
   const { authorizationCode } = req.body;
   console.log(authorizationCode);
 
@@ -15,11 +16,10 @@ module.exports = (req, res) => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
     },
-    // body : JSON.stringify(data)
   })
     .then((res) => res.json())
     .then((data) => {
-      let uri = 'https://kapi.kakao.com/v2/user/me?]';
+      let uri = 'https://kapi.kakao.com/v2/user/me';
       fetch(uri, {
         method: 'GET',
         headers: {
@@ -28,8 +28,6 @@ module.exports = (req, res) => {
       })
         .then((res) => res.json())
         .then(async (json) => {
-          //email : json.kakao_account.email
-          console.log(json);
           let checkEmail = await User.findOne({
             where: { email: json.kakao_account.email },
           });
@@ -58,7 +56,7 @@ module.exports = (req, res) => {
               .cookie('token', token, {
                 secure: true,
                 httpOnly: true,
-                sameSite: 'None',
+                sameSite: 'none',
               })
               .json({
                 data: {
@@ -92,7 +90,7 @@ module.exports = (req, res) => {
               .cookie('token', token, {
                 secure: true,
                 httpOnly: true,
-                sameSite: 'None',
+                sameSite: 'none',
               })
               .json({
                 data: {
