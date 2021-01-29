@@ -5,9 +5,7 @@ const config = require('../../../config/index');
 const { TOKEN_SECRET } = config;
 
 module.exports = (req, res) => {
-  // const { authorizationCode } = req.body;
   const { authorizationCode } = req.body;
-  console.log(authorizationCode);
 
   let url = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${config.KAKAO_API_KEY}&redirect_uri=${config.KAKAO_REDIRECT_URI}&code=${authorizationCode}`;
 
