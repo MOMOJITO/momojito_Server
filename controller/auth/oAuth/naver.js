@@ -6,7 +6,6 @@ const { TOKEN_SECRET } = config;
 
 module.exports = async (req, res) => {
   const { authorizationCode } = req.body;
-  console.log(authorizationCode);
 
   let url = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${config.NAVER_API_KEY}&client_secret=${config.NAVER_SECRET}&redirect_uri=${config.NAVER_REDIRECT_URI}&code=${authorizationCode}&state=rara`;
 
@@ -27,7 +26,6 @@ module.exports = async (req, res) => {
       })
         .then((res) => res.json())
         .then(async (json) => {
-          console.log(json);
 
           let checkEmail = await User.findOne({
             where: { email: json.response.email },
